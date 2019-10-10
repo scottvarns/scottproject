@@ -20,6 +20,8 @@ gameScene4.preload = function () {
     this.load.image('background','assets/background.png');
     this.load.image('endscreen','assets/blackscreen.png');
     this.load.audio('gameSound','assets/WorldmapTheme.mp3');
+    this.load.audio('coinSound','assets/Coin 3.mp3');
+    this.load.spritesheet('coin', 'assets/coins.png', {frameWidth: 40, frameHeight: 40});
     this.load.spritesheet('tileset', 'assets/tileset.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet(`dude`, `assets/dude.png`, { frameWidth: 32, frameHeight: 48 });
 
@@ -28,6 +30,8 @@ gameScene4.preload = function () {
 gameScene4.create = function () {
 
     this.add.image(2000, 576, 'background');
+
+    coinAudio = this.sound.add('coinSound');
 
     music = this.sound.add('gameSound');
     music.loop = true;
@@ -82,7 +86,7 @@ gameScene4.create = function () {
     this.layer.setCollision(03);
     //this.layer.setCollision(04);//lava
     //this.layer.setCollision(05);//water
-    this.layer.setCollision(06);//coin block
+    //this.layer.setCollision(06);//coin block
     this.layer.setCollision(07);//crate
 //door is 08
     this.player = this.physics.add.sprite(32, 450, `dude`); 
@@ -90,6 +94,10 @@ gameScene4.create = function () {
     //this.player.setCollideWorldBounds(true);
 
     this.physics.add.collider(this.player, this.layer);
+
+    this.coinBlock = this.map.filterTiles(function(tile){
+        return(tile.index === 06);
+    });
 
     this.doorHit = this.map.filterTiles(function(tile){
         return(tile.index === 08);
@@ -103,6 +111,8 @@ gameScene4.create = function () {
         return (tile.index === 04);
     });
     
+    this.physics.world.overlapTiles(this.player, this.coinBlock, this.spawnCoin, null, this);
+
     this.physics.world.overlapTiles(this.player, this.doorHit, this.hitDoor, null, this);
 
     this.physics.world.overlapTiles(this.player, this.lavaHit, this.hitLava, null, this);
@@ -162,11 +172,19 @@ gameScene4.update = function () {
         this.player.setVelocityY(-380);
     }
 
+    this.physics.world.overlapTiles(this.player, this.coinBlock, this.spawnCoin, null, this);
+
     this.physics.world.overlapTiles(this.player, this.lavaHit, this.hitLava, null, this);
 
     this.physics.world.overlapTiles(this.player, this.waterHit, this.hitWater, null, this);
 
     this.physics.world.overlapTiles(this.player, this.doorHit, this.hitDoor, null, this);
+};
+
+coinScore = 0
+
+gameScene4.spawnCoin = function(player, tile){
+        console.log('coin collected');
 };
 
 gameScene4.hitLava = function(player, tile){
