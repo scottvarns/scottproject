@@ -173,6 +173,7 @@ gameScene4.hitLava = function(player, tile){
         this.gameOver = true;
         player.disableBody(true, true);
         console.log('lava hit');
+        music.stop();
         globalScore = 0;
         this.scene.start('startScreen');
 };

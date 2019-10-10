@@ -133,7 +133,7 @@ gameScene3.update = function(){
     
     if (cursors.up.isDown && this.player.body.touching.down)
     {
-        this.player.setVelocityY(-330);
+        this.player.setVelocityY(-430);
     }
     
     if (globalScore==360){

@@ -18,7 +18,7 @@ startScreen.preload = function() {
 startScreen.create = function(){
     music = this.sound.add('gameSound');
     music.loop = true;
-    music.play();
+    //music.play();
     this.titlescreen = this.add.image(400, 300, 'background-image');
     this.titlescreen.setInteractive();
     this.titlescreen.on('pointerdown', () => { startScreen.start(); });
