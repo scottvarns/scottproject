@@ -19,6 +19,7 @@ gameScene4.preload = function () {
     this.load.image('grass', 'assets/grass3.png');
     this.load.image('background','assets/background.png');
     this.load.image('endscreen','assets/blackscreen.png');
+    this.load.image('rocket','assets/mario rocket.png');
     this.load.audio('gameSound','assets/WorldmapTheme.mp3');
     this.load.audio('coinSound','assets/Coin 3.mp3');
     this.load.spritesheet('coin', 'assets/coins.png', {frameWidth: 40, frameHeight: 40});
@@ -30,6 +31,8 @@ gameScene4.preload = function () {
 gameScene4.create = function () {
 
     this.add.image(2000, 576, 'background');
+
+    this.add.image(352 , 936, 'rocket').setScale(0.25);
 
     coinAudio = this.sound.add('coinSound');
 
@@ -183,9 +186,7 @@ gameScene4.update = function () {
 
 coinScore = 0
 
-gameScene4.spawnCoin = function(player, tile){
-        console.log('coin collected');
-};
+
 
 gameScene4.hitLava = function(player, tile){
         this.gameOver = true;
@@ -213,5 +214,8 @@ gameScene4.hitDoor = function(player, tile){
     //this.endText.setText("Congratulations!");
 }
 
+gameScene4.spawnCoin = function(player, tile){
+    console.log('level complete');
+}
 
 //still need to add a next level adn maybe rockets like in mario
